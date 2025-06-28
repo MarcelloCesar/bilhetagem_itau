@@ -1,0 +1,1 @@
+cd app && python -m uvicorn web_server:app --port 80 --reload
