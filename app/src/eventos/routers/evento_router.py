@@ -4,5 +4,5 @@ router = APIRouter(prefix="/eventos")
 
 
 @router.get("/")
-async def create_item():
+async def rota_get_eventos():
     return "oie"
