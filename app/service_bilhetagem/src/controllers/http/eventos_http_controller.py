@@ -1,5 +1,5 @@
-from src.service_bilhetagem.usecases.evento_usecase import EventoUseCase
-from src.service_bilhetagem.adapters.evento_adapter_sql_alchemy import (
+from ...usecases.evento_usecase import EventoUseCase
+from ...adapters.evento_adapter_sql_alchemy import (
     EventoAdapterSQLAlchemy
 )
 

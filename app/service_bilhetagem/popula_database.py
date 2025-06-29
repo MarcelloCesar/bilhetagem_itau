@@ -1,6 +1,6 @@
 import uuid
 from sqlalchemy.orm import Session
-from adapters.sqlalchemy_entities.evento import Evento
+from src.adapters.sqlalchemy_entities.evento import Evento
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 

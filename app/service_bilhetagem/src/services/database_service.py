@@ -13,7 +13,8 @@ class DatabaseService:
         return cls.instance
 
     def _initialize(self):
-        self.database_url = "sqlite:///./src/service_bilhetagem/service_bilhetagem.db"  # Example for SQLite, adjust as needed
+        database_path = getenv("DB_BILHETAGEM_PATH", "")
+        self.database_url = "sqlite:///./" + database_path
         self.engine = create_engine(self.database_url, echo=False)
         self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
 

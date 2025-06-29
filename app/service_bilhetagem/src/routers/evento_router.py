@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from src.service_bilhetagem.controllers.http.eventos_http_controller import (
+from src.controllers.http.eventos_http_controller import (
     http_get_dados_evento, http_get_lista_eventos
 )
 
