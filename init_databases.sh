@@ -1,0 +1,1 @@
+cd app/service_bilhetagem && sh init_database.sh

@@ -9,6 +9,7 @@ class Evento(Base):
 
     id = id = Column(String(36), primary_key=True, default=lambda: str(uuid4()))
     nome = Column(String, nullable=False)
+    descricao = Column(String, nullable=True)
 
     def __repr__(self):
         return f"<Evento(id={self.id}, nome={self.nome})>"

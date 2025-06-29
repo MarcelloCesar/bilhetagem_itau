@@ -12,7 +12,8 @@ class EventoUseCase:
 
         return {
             "id": evento.id,
-            "nome": evento.nome
+            "nome": evento.nome,
+            "descricao": str(evento.descricao)
         }
 
     def get_lista_eventos(self):
@@ -23,6 +24,7 @@ class EventoUseCase:
         return [
             {
                 "id": evento.id,
-                "nome": evento.nome
+                "nome": evento.nome,
+                "descricao": str(evento.descricao) if evento.descricao else None
             } for evento in eventos
         ]
