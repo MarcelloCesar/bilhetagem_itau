@@ -17,6 +17,7 @@ def popular_mock_eventos(session: Session):
         Evento(id=str(uuid.uuid4()), nome="Stand-up Comedy"),
         Evento(id=str(uuid.uuid4()), nome="Concerto Clássico"),
         Evento(id=str(uuid.uuid4()), nome="Festival de Comida"),
+        Evento(id="1234-5678-90", nome="Mock"),
     ]
 
     session.add_all(eventos)
