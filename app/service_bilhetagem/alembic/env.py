@@ -20,6 +20,10 @@ if config.config_file_name is not None:
 # target_metadata = mymodel.Base.metadata
 from src.adapters.sqlalchemy_entities.base import Base
 from src.adapters.sqlalchemy_entities.evento import Evento
+from src.adapters.sqlalchemy_entities.ingresso import Ingresso
+from src.adapters.sqlalchemy_entities.reserva import Reserva
+from src.adapters.sqlalchemy_entities.sessao import Sessao
+from src.adapters.sqlalchemy_entities.setor import Setor
 target_metadata = Base.metadata
 
 # other values from the config, defined by the needs of env.py,

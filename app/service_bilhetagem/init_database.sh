@@ -22,7 +22,7 @@ sed -i "s|sqlalchemy.url = .*|sqlalchemy.url = sqlite:///./$DB_FILE|" alembic.in
 # Copia model base e configura env.py para usar metadados
 # (Ajude Alembic a localizar os modelos)
 # Substitui linha que contém "target_metadata = None"
-sed -i "s|target_metadata = None|from src.adapters.sqlalchemy_entities.base import Base\nfrom src.adapters.sqlalchemy_entities.evento import Evento\ntarget_metadata = Base.metadata|" "$ALEMBIC_DIR/env.py"
+sed -i "s|target_metadata = None|from src.adapters.sqlalchemy_entities.base import Base\nfrom src.adapters.sqlalchemy_entities.evento import Evento\nfrom src.adapters.sqlalchemy_entities.ingresso import Ingresso\nfrom src.adapters.sqlalchemy_entities.reserva import Reserva\nfrom src.adapters.sqlalchemy_entities.sessao import Sessao\nfrom src.adapters.sqlalchemy_entities.setor import Setor\ntarget_metadata = Base.metadata|" "$ALEMBIC_DIR/env.py"
 
 
 # Gera primeira migration
