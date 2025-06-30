@@ -22,6 +22,12 @@ class ReservaUseCase:
         self.ingresso_repository = ingresso_repository
 
     def create_nova_reserva(self, request: CreateReservaRequest):
+        """
+        Cria uma nova reserva de ingresso para uma sessão específica.
+
+        :param request: Objeto contendo os dados necessários para criar a reserva.
+        :return: Dicionário com a mensagem de sucesso ou erro.
+        """
         logger.debug("Iniciando criacao de nova reserva")
         setor_selecionado = self.setor_repository.\
             get_setor_por_id(request.id_setor)

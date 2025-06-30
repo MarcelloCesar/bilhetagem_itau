@@ -9,6 +9,11 @@ class SessaoUseCase:
         self.repository = sessao_repository
 
     def get_dados_sessoes_ativas_para_o_evento(self, id_evento: str):
+        """
+        Obtém as sessões ativas para um evento específico.
+        :param id_evento: ID do evento para o qual as sessões ativas serão buscadas.
+        :return: Lista de sessões ativas ou mensagem de erro se não houver sessões.
+        """
         logger.debug(f"Buscando sessões ativas para o evento com ID: {id_evento}")
         sessoes = self.repository.\
             get_dados_sessoes_ativas_para_o_evento(id_evento)
