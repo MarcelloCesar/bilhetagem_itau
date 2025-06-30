@@ -9,9 +9,9 @@ from ..adapters.sqlalchemy_entities.ingresso import Ingresso
 from ..adapters.sqlalchemy_entities.reserva import Reserva
 from ..adapters.sqlalchemy_entities.setor import Setor
 from sqlalchemy.orm import aliased
-import logging
+from ..util.app_logger import AppLogger
 
-logger = logging.getLogger(__name__)
+logger = AppLogger().get_logger()
 
 
 class SessaoAdapterSQLAlchemy(SessaoRepository):

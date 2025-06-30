@@ -3,9 +3,9 @@ from ..services.database_service import DatabaseService
 from ..adapters.sqlalchemy_entities.evento import Evento
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
-import logging
+from ..util.app_logger import AppLogger
 
-logger = logging.getLogger(__name__)
+logger = AppLogger().get_logger()
 
 
 class EventoAdapterSQLAlchemy(EventoRepository):
