@@ -63,7 +63,7 @@ def popular_mock_setores(session: Session):
     session.commit()
 
 
-ingressos_id = [str(uuid.uuid4()) for _ in range(25)]
+ingressos_id = [str(uuid.uuid4()) for _ in range(35)]
 def popular_mock_ingressos(session: Session):
     ingressos_0 = [
         Ingresso(id=ingressos_id[i],
@@ -83,7 +83,13 @@ def popular_mock_ingressos(session: Session):
                  id_setor=setores_id[3], cadeira=f"A{i}", valor=75.00) for i in range(10)
     ]
 
-    for ingresso in ingressos_0 + ingressos_1 + ingressos_2:
+    ingressos_3 = [
+        Ingresso(id=ingressos_id[i + 25],
+                 id_sessao=sessoes_id[4],
+                 id_setor=setores_id[4], cadeira=f"P{i}", valor=75.00) for i in range(10)
+    ]
+
+    for ingresso in ingressos_0 + ingressos_1 + ingressos_2 + ingressos_3:
         session.add(ingresso)
 
     session.commit()

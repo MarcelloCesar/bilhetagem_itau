@@ -9,6 +9,7 @@ from ..adapters.sqlalchemy_entities.ingresso import Ingresso
 from ..adapters.sqlalchemy_entities.reserva import Reserva
 from ..adapters.sqlalchemy_entities.setor import Setor
 from sqlalchemy.orm import aliased
+from datetime import datetime
 from ..util.app_logger import AppLogger
 
 logger = AppLogger().get_logger()
@@ -20,16 +21,16 @@ class SessaoAdapterSQLAlchemy(SessaoRepository):
 
     def get_dados_sessoes_ativas_para_o_evento(self, id_evento: str):
         try:
+            logger.debug(f"Buscando sessões ativas para o evento com ID: {id_evento}")
+            now = datetime.now()
             session: Session = self.database.get_session()
             subquery_reservas_ativas = (
                 select(Reserva.id)
                 .where(
                     and_(
                         Reserva.id_ingresso == Ingresso.id,
-                        func.current_timestamp().between(
-                            Reserva.data_hora_reserva,
-                            Reserva.data_hora_expiracao
-                        )
+                        Reserva.data_hora_reserva <= now,
+                        Reserva.data_hora_expiracao >= now
                     )
                 )
             )
@@ -39,6 +40,7 @@ class SessaoAdapterSQLAlchemy(SessaoRepository):
                     Sessao.id,
                     Sessao.data,
                     Sessao.horario_inicio,
+                    Setor.id,
                     Setor.nome,
                     Setor.possui_lugar_marcado,
                     func.count().label("ingressos_disponiveis"),
@@ -56,15 +58,17 @@ class SessaoAdapterSQLAlchemy(SessaoRepository):
             result = session.execute(query).all()
             session.close()
 
+            logger.debug(f"Sessões ativas encontradas para o evento {id_evento}: {result}")
             return [
                 SessaoIngressosDisponiveisDTO(
                     id_sessao=row[0],
                     data_sessao=row[1],
                     horario_inicio=row[2],
-                    setor=row[3],
-                    possui_lugar_marcado=row[4],
-                    ingressos_disponiveis=row[5],
-                    cadeiras_disponiveis=row[6]
+                    setor_id=row[3],
+                    setor_nome=row[4],
+                    possui_lugar_marcado=row[5],
+                    ingressos_disponiveis=row[6],
+                    cadeiras_disponiveis=row[7]
                 ) for row in result
             ]
 

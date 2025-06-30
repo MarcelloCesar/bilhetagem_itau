@@ -9,10 +9,17 @@ from pydantic import ValidationError
 from src.domain.exceptions.request_validation_exception import \
     RequestValidationException
 import jwt
+from ...util.app_logger import AppLogger
+from ...util.metrics_medir_metrica_tempo_execucao import medir_metrica_tempo_execucao
+
+logger = AppLogger().get_logger()
 
 
+@medir_metrica_tempo_execucao
 def http_post_criar_reserva(headers: dict, body):
     try:
+        logger.debug("Iniciando controller http_post_criar_reserva")
+        logger.info("Iniciando criacao de reserva")
         usecase = ReservaUseCase(
             reserva_repository=ReservaAdapterSQLAlchemy(),
             setor_repository=SetorAdapterSQLAlchemy(),
@@ -24,10 +31,13 @@ def http_post_criar_reserva(headers: dict, body):
                 errors=[{"campo": "Authorization",
                          "mensagem": "Header não informado"}]
             )
+
+        logger.debug("Iniciando validação do token")
         token = authorization.split(" ")[1]
         authorization = jwt.decode(token, options={"verify_signature": False})
 
         id_cliente = authorization.get("id_cliente")
+        logger.debug(f"Id do cliente obtido do token: {id_cliente}")
         if not id_cliente:
             raise RequestValidationException(
                 errors=[{"campo": "Authorization",
@@ -35,8 +45,16 @@ def http_post_criar_reserva(headers: dict, body):
             )
 
         body["id_cliente"] = id_cliente
+
+        logger.debug("Criando objeto de requisição")
         request_body = CreateReservaRequest(**body)
-        return usecase.create_nova_reserva(request_body)
+
+        logger.debug("Iniciando criação da nova reserva")
+        resultado = usecase.create_nova_reserva(request_body)
+
+        logger.info(f"Retornando dados: {resultado}")
+        return resultado
+
     except ValidationError as e:
         raise RequestValidationException(
             errors=[
@@ -53,3 +71,7 @@ def http_post_criar_reserva(headers: dict, body):
             errors=[{"campo": "Authorization",
                      "mensagem": f"Token inválido: {str(e)}"}]
         )
+
+    except Exception as e:
+        logger.exception(e)
+        return

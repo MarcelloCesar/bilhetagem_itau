@@ -4,7 +4,8 @@ from ..domain.entities.ingresso_entity import IngressoEntity
 from ..adapters.sqlalchemy_entities.ingresso import Ingresso
 from ..adapters.sqlalchemy_entities.reserva import Reserva
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import select, func, and_, not_, exists
+from sqlalchemy import select, and_, not_, exists
+from datetime import datetime
 from ..util.app_logger import AppLogger
 
 logger = AppLogger().get_logger()
@@ -16,10 +17,13 @@ class IngressoAdapterSQLAlchemy(IngressoRepository):
 
     def get_ingresso_por_id(self, id_ingresso: str) -> IngressoEntity:
         try:
+            logger.debug(f"Buscando ingresso com ID: {id_ingresso}")
             session = self.database.get_session()
             evento = session.query(Ingresso).\
                 filter_by(id=id_ingresso).first()
             session.close()
+
+            logger.debug(f"Ingresso encontrado: {evento}")
             return evento.to_entity() if evento else None
 
         except SQLAlchemyError as e:
@@ -27,20 +31,19 @@ class IngressoAdapterSQLAlchemy(IngressoRepository):
             session.rollback()
             raise e
 
-    def get_ingresso_disponivel_para_sessao_e_setor(self,
-                                                    id_sessao: str,
-                                                    id_setor: str) -> IngressoEntity:
+    def get_ingresso_disponivel_para_sessao_e_setor(
+            self, id_sessao: str, id_setor: str, cadeira: str = None) -> IngressoEntity:
         try:
+            logger.debug(f"Buscando ingresso disponível para a sessão {id_sessao} e setor {id_setor}")
+            now = datetime.now()
             session = self.database.get_session()
             subquery_reservas_ativas = (
                 select(Reserva.id)
                 .where(
                     and_(
                         Reserva.id_ingresso == Ingresso.id,
-                        func.current_timestamp().between(
-                            Reserva.data_hora_reserva,
-                            Reserva.data_hora_expiracao
-                        )
+                        Reserva.data_hora_reserva <= now,
+                        Reserva.data_hora_expiracao >= now
                     )
                 )
             )
@@ -51,15 +54,17 @@ class IngressoAdapterSQLAlchemy(IngressoRepository):
                     and_(
                         Ingresso.id_sessao == id_sessao,
                         Ingresso.id_setor == id_setor,
+                        Ingresso.cadeira == cadeira if cadeira else True,
                         not_(exists(subquery_reservas_ativas))
                     )
                 )
                 .limit(1)
             )
 
-            result = session.execute(query).first()
+            result: list[Ingresso] = session.execute(query).first()
             session.close()
 
+            logger.debug(f"Ingresso disponível encontrado: {result}")
             return result[0].to_entity() if result else None
 
         except SQLAlchemyError as e:

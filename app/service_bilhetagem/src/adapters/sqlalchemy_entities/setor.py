@@ -14,12 +14,13 @@ class Setor(Base):
     possui_lugar_marcado = Column(Boolean, nullable=False, default=False)
 
     def __repr__(self):
-        return f"<Setor(id={self.id}, nome={self.nome})>"
+        return f"<Setor(id={self.id}, nome={self.nome}, possui_lugar={self.possui_lugar_marcado})>"
 
     def to_entity(self):
         return SetorEntity(
             id=self.id,
             nome=self.nome,
             capacidade=self.capacidade,
-            valor=self.valor
+            valor=self.valor,
+            possui_lugar_marcado=self.possui_lugar_marcado
         )

@@ -14,11 +14,14 @@ class SetorAdapterSQLAlchemy(SetorRepository):
 
     def get_setor_por_id(self, id_setor: str) -> SetorEntity:
         try:
+            logger.debug(f"Buscando setor com ID: {id_setor}")
             session = self.database.get_session()
-            evento = session.query(Setor).\
+            setor = session.query(Setor).\
                 filter_by(id=id_setor).first()
             session.close()
-            return evento.to_entity() if evento else None
+
+            logger.debug(f"Setor encontrado: {setor}")
+            return setor.to_entity() if setor else None
 
         except SQLAlchemyError as e:
             logger.exception(f"Erro ao obter dados do setor com ID {id_setor}: {e}")

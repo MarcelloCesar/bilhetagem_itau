@@ -19,5 +19,5 @@ class ReservaEntity:
             raise TypeError("data_hora_expiracao deve ser do tipo datetime")
         if self.data_hora_expiracao <= self.data_hora_reserva:
             raise ValueError("data_hora_expiracao deve ser maior que data_hora_reserva")
-        if self.situacao not in ["ATIVA", "CANCELADA"]:
-            raise ValueError("situacao deve ser 'ATIVA' ou 'CANCELADA'")
+        if self.situacao not in ["ANALISE", "CONFIRMADA"]:
+            raise ValueError("situacao deve ser 'ANALISE' ou 'CONFIRMADA'")

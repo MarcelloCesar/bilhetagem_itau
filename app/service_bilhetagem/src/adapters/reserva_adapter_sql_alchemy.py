@@ -14,6 +14,7 @@ class ReservaAdapterSQLAlchemy(ReservaRepository):
 
     def create_nova_reserva(self, reserva: ReservaEntity) -> ReservaEntity:
         try:
+            logger.debug("Iniciando criação de nova reserva")
             session = self.database.get_session()
             nova_reserva = Reserva(
                 id_ingresso=reserva.id_ingresso,
@@ -28,6 +29,7 @@ class ReservaAdapterSQLAlchemy(ReservaRepository):
             session.refresh(nova_reserva)
             session.close()
 
+            logger.debug(f"Reserva criada com sucesso: {nova_reserva}")
             reserva.id = nova_reserva.id
             return reserva
 

@@ -16,7 +16,7 @@ cd <PASTA_DO_PROJETO>
 #### Crie o ambiente virtual
 ```bash
 python -m venv venv
-source venv/bin/activate  # git bash ou Linux
+source venv/Scripts/activate  # git bash ou Linux
 ```
 
 

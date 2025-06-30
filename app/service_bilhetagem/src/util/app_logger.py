@@ -30,9 +30,18 @@ class JsonFormatter(logging.Formatter):
 
 
 class AppLogger:
-    def __init__(self, name="app", level="INFO"):
+    LEVEL = "INFO"
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super(AppLogger, cls).__new__(cls)
+            cls._instance._initialize_logger(*args, **kwargs)
+        return cls._instance
+
+    def _initialize_logger(self, name="app"):
         self.logger = logging.getLogger(name)
-        self.logger.setLevel(level.upper())
+        self.logger.setLevel(self.LEVEL)
         self.logger.propagate = False
 
         if not self.logger.handlers:
