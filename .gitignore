@@ -8,6 +8,9 @@ venv/
 env/
 .venv/
 
+# logs
+server_logs/
+
 # Arquivos de configuração do Python
 *.pyc
 *.pyo
