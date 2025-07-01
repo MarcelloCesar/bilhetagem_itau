@@ -6,7 +6,7 @@ from ...domain.input_entities.create_reserva_input_entity import (
     CreateReservaRequest
 )
 from pydantic import ValidationError
-from src.domain.exceptions.request_validation_exception import \
+from ...domain.exceptions.request_validation_exception import \
     RequestValidationException
 import jwt
 from ...util.app_logger import AppLogger
@@ -71,7 +71,3 @@ def http_post_criar_reserva(headers: dict, body):
             errors=[{"campo": "Authorization",
                      "mensagem": f"Token inválido: {str(e)}"}]
         )
-
-    except Exception as e:
-        logger.exception(e)
-        return

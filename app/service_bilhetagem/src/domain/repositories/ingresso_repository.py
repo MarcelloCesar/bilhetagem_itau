@@ -9,7 +9,7 @@ class IngressoRepository:
         :param id_ingresso: ID do ingresso a ser buscado.
         :return: IngressoEntity com os detalhes do ingresso encontrado.
         """
-        raise NotImplementedError("Este método deve ser implementado por subclasses.")
+        raise NotImplementedError("Este método deve ser implementado por subclasses.") # pragma: no cover
 
     def get_ingresso_disponivel_para_sessao_e_setor(self,
                                                     id_sessao: str,
@@ -21,4 +21,4 @@ class IngressoRepository:
         :param id_setor: ID do setor do evento.
         :return: IngressoEntity com os detalhes do ingresso encontrado.
         """
-        raise NotImplementedError("Este método deve ser implementado por subclasses.")
+        raise NotImplementedError("Este método deve ser implementado por subclasses.") # pragma: no cover

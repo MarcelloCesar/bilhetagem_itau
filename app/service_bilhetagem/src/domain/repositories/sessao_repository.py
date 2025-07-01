@@ -10,4 +10,4 @@ class SessaoRepository:
         :param id_evento: ID do evento para o qual as sessões ativas serão buscadas.
         :return: Lista de SessaoIngressosDisponiveisDTO contendo os dados das sessões ativas.
         """
-        raise NotImplementedError("Método não implementado")
+        raise NotImplementedError("Método não implementado") # pragma: no cover

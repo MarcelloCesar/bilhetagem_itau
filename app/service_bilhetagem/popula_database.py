@@ -42,6 +42,8 @@ def popular_mock_sessoes(session: Session):
         Sessao(id=sessoes_id[2], id_evento=eventos_id[0], data=amanha, horario_inicio=horas_21),
         Sessao(id=sessoes_id[3], id_evento=eventos_id[1], data=amanha, horario_inicio=horas_19),
         Sessao(id=sessoes_id[4], id_evento=eventos_id[1], data=amanha, horario_inicio=horas_20),
+        Sessao(id="1234-5678-90", id_evento="1234-5678-90", data=amanha, horario_inicio=horas_20),
+        Sessao(id="00000000-0000-0000-0000-000000000000", id_evento="1234-5678-90", data=amanha, horario_inicio=horas_20)
     ]
 
     session.add_all(sessoes)
@@ -57,6 +59,9 @@ def popular_mock_setores(session: Session):
         Setor(id=setores_id[3], nome="Arquibancada", capacidade=10, valor=60.00, possui_lugar_marcado=True),
         Setor(id=setores_id[4], nome="Plateia", capacidade=20, valor=100.00, possui_lugar_marcado=True),
         Setor(id="1234-5678-90", nome="Mock Setor", capacidade=50, valor=20.00),
+        Setor(id="00000000-0000-0000-0000-000000000000", nome="Mock Setor2", capacidade=50, valor=20.00),
+        Setor(id="00000000-0000-0000-0000-000000000001", nome="Mock Setor3", capacidade=50, valor=20.00, possui_lugar_marcado=True),
+
     ]
 
     session.add_all(setores)
@@ -92,6 +97,9 @@ def popular_mock_ingressos(session: Session):
     for ingresso in ingressos_0 + ingressos_1 + ingressos_2 + ingressos_3:
         session.add(ingresso)
 
+    session.add(Ingresso(id="1234-5678-90", id_sessao="1234-5678-90", id_setor="1234-5678-90", cadeira=None, valor=75.00))
+    session.add(Ingresso(id="00000000-0000-0000-0000-000000000000", id_sessao="00000000-0000-0000-0000-000000000000", id_setor="00000000-0000-0000-0000-000000000000", cadeira=None, valor=75.00))
+    session.add(Ingresso(id="00000000-0000-0000-0000-000000000001", id_sessao="00000000-0000-0000-0000-000000000000", id_setor="00000000-0000-0000-0000-000000000001", cadeira="A1", valor=75.00))
     session.commit()
 
 

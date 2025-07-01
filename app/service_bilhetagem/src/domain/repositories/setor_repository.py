@@ -9,4 +9,4 @@ class SetorRepository:
         :param id_ingresso: ID do setor a ser buscado.
         :return: SetorEntity com os detalhes do setor encontrado.
         """
-        raise NotImplementedError("Este método deve ser implementado por subclasses.")
+        raise NotImplementedError("Este método deve ser implementado por subclasses.") # pragma: no cover

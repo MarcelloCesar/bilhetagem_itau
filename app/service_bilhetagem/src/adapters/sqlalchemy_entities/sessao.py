@@ -19,5 +19,6 @@ class Sessao(Base):
         return SessaoEntity(
             id=self.id,
             data=self.data,
+            id_evento=self.id_evento,
             horario_inicio=self.horario_inicio,
         )

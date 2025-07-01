@@ -10,21 +10,29 @@ logger = AppLogger().get_logger()
 
 @medir_metrica_tempo_execucao
 def http_get_dados_evento(id_evento: str):
-    logger.debug("Iniciando controller http_get_dados_evento")
-    logger.info(f"Buscando dados do evento {id_evento}")
-    usecase = EventoUseCase(evento_repository=EventoAdapterSQLAlchemy())
+    try:
+        logger.debug("Iniciando controller http_get_dados_evento")
+        logger.info(f"Buscando dados do evento {id_evento}")
+        usecase = EventoUseCase(evento_repository=EventoAdapterSQLAlchemy())
 
-    resultado = usecase.get_dados_evento(id_evento)
-    logger.info(f"Retornando dados: {resultado}")
-    return resultado
+        resultado = usecase.get_dados_evento(id_evento)
+        logger.info(f"Retornando dados: {resultado}")
+        return resultado
+    except Exception as e:
+        logger.exception(e)
+        return {"error": "Erro desconhecido"}
 
 
 @medir_metrica_tempo_execucao
 def http_get_lista_eventos():
-    logger.debug("Iniciando controller http_get_lista_eventos")
-    logger.info("Iniciando listagem de eventos")
-    usecase = EventoUseCase(evento_repository=EventoAdapterSQLAlchemy())
+    try:
+        logger.debug("Iniciando controller http_get_lista_eventos")
+        logger.info("Iniciando listagem de eventos")
+        usecase = EventoUseCase(evento_repository=EventoAdapterSQLAlchemy())
 
-    resultado = usecase.get_lista_eventos()
-    logger.info(f"Retornando dados: {resultado}")
-    return resultado
+        resultado = usecase.get_lista_eventos()
+        logger.info(f"Retornando dados: {resultado}")
+        return resultado
+    except Exception as e:
+        logger.exception(e)
+        return {"error": "Erro desconhecido"}

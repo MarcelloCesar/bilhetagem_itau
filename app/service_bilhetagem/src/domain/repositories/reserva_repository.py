@@ -9,4 +9,4 @@ class ReservaRepository:
         :param reserva: Objeto ReservaEntity contendo os detalhes da reserva.
         :return: ReservaEntity com os detalhes da reserva criada.
         """
-        raise NotImplementedError("Este método deve ser implementado por subclasses.")
+        raise NotImplementedError("Este método deve ser implementado por subclasses.") # pragma: no cover

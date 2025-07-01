@@ -19,12 +19,12 @@ class IngressoAdapterSQLAlchemy(IngressoRepository):
         try:
             logger.debug(f"Buscando ingresso com ID: {id_ingresso}")
             session = self.database.get_session()
-            evento = session.query(Ingresso).\
+            ingresso = session.query(Ingresso).\
                 filter_by(id=id_ingresso).first()
             session.close()
 
-            logger.debug(f"Ingresso encontrado: {evento}")
-            return evento.to_entity() if evento else None
+            logger.debug(f"Ingresso encontrado: {ingresso}")
+            return ingresso.to_entity() if ingresso else None
 
         except SQLAlchemyError as e:
             logger.exception(f"Erro ao obter dados do ingresso com ID {id_ingresso}: {e}")
